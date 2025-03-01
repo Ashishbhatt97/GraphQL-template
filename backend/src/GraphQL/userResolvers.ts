@@ -11,6 +11,7 @@ export const userResolvers = {
       __,
       { userId, prisma }: { userId: string; prisma: PrismaClient }
     ) => {
+      
       if (!userId) {
         throw new Error("User not authenticated");
       }

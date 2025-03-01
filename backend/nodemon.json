@@ -2,8 +2,5 @@
     "watch": [
         "src"
     ],
-    "ignore": [
-        "src/**/*"
-    ],
     "ext": "ts"
 }
