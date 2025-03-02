@@ -1,5 +1,8 @@
 import { PrismaClient, User } from "@prisma/client";
-import { generateToken } from "../common/services/passport.services";
+import {
+  generateToken,
+  refreshAccessToken,
+} from "../common/services/passport.services";
 import bcrypt from "bcryptjs";
 import { UserInput } from "../types/types";
 import roleAuth from "../common/middlwares/roleAuth.middleware";
@@ -11,7 +14,8 @@ export const userResolvers = {
       __,
       { userId, prisma }: { userId: string; prisma: PrismaClient }
     ) => {
-      
+      console.log(userId);
+
       if (!userId) {
         throw new Error("User not authenticated");
       }
@@ -101,27 +105,18 @@ export const userResolvers = {
       return token;
     },
 
-    refreshToken: async (
+    refreshAccessToken: async (
       _,
-      { refreshToken }: { refreshToken: string },
-      { prisma }: { prisma: PrismaClient }
+      { refreshToken }: { refreshToken: string }
     ) => {
-      const user = await prisma.user.findFirst({
-        where: { refreshToken },
-      });
+      const accessToken = refreshAccessToken(refreshToken);
 
-      if (!user) {
-        throw new Error("Invalid refresh token");
-      }
+      const result = {
+        accessToken,
+        refreshToken,
+      };
 
-      const token = generateToken(user);
-
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { refreshToken: token.refreshToken },
-      });
-
-      return token;
+      return result;
     },
 
     updateUser: async (

@@ -24,7 +24,7 @@ export const generateToken = (user: User) => {
     { userId: user.id, role: user.role },
     process.env.JWT_ACCESS_SECRET,
     {
-      expiresIn: "1h",
+      expiresIn: "1m",
     }
   );
 
@@ -49,17 +49,17 @@ export const decodeToken = (token: string) => {
   }
 };
 
-export const refreshAccessToken = (refreshToken: string) => {
+export const refreshAccessToken = async (refreshToken: string) => {
   try {
     const decoded = jwt.verify(
       refreshToken,
       process.env.JWT_REFRESH_SECRET
-    ) as JwtPayload;
+    ) as JwtPayload & { userId: string };
 
     if (!decoded) {
       return null;
     }
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
     });
 
@@ -67,15 +67,15 @@ export const refreshAccessToken = (refreshToken: string) => {
       return null;
     }
 
-    const accessToken = jwt.sign(
+    const accessToken: string = jwt.sign(
       { userId: user["id"], role: user["role"] },
       process.env.JWT_ACCESS_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "1m",
       }
     );
 
-    return { accessToken };
+    return accessToken;
   } catch (error) {
     return null;
   }

@@ -21,9 +21,10 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const REFRESH_TOKEN_MUTATION = gql`
-  mutation RefreshToken {
-    refreshToken {
+  mutation RefreshAccessToken($refreshToken: String!) {
+    refreshAccessToken(refreshToken: $refreshToken) {
       accessToken
+      refreshToken
     }
   }
 `;

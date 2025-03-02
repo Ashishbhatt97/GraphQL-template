@@ -41,7 +41,7 @@ input UserInput {
   type Mutation {
     createUser(email: String!, password: String!, name: String!): User
     login(email: String!, password: String!): AuthResponse
-    refreshToken(refreshToken: String!): AuthResponse
+    refreshAccessToken(refreshToken: String!): AuthResponse
     logout: Boolean
     updateUser(user: UserInput!): User
     deleteUser: Boolean

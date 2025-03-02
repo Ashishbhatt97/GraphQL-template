@@ -1,15 +1,15 @@
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/validations";
-import Input from "../ui/Input";
-import Container from "../Container";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "@/GraphQL";
-import { toast } from "sonner";
-import { useDispatch } from "react-redux";
 import { setTokens } from "@/store/reducers/authReducers";
+import { loginSchema } from "@/validations";
+import { useMutation } from "@apollo/client";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import * as yup from "yup";
+import Container from "../Container";
+import Input from "../ui/Input";
 
 type FormData = yup.InferType<typeof loginSchema>;
 
@@ -26,7 +26,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const [login, { data, loading }] = useMutation(LOGIN_MUTATION, {
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
       reset();
       navigate("/");
@@ -51,8 +51,6 @@ const Login = () => {
     login({ variables: { email: data.email, password: data.password } });
   };
 
-  console.log(data);
-
   return (
     <Container>
       <div className="flex pt-24 gap-8 h-screen items-center">
@@ -63,7 +61,9 @@ const Login = () => {
           />
         </div>
         <div className="w-1/2 p-10 flex flex-col gap-5">
-          <h1 className="text-8xl font-extrabold text-center mb-5">Login</h1>
+          <h1 className="text-2xl leading-7 font-extrabold text-center mb-5">
+            Log in to your account
+          </h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-5"

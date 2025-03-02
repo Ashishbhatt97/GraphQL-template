@@ -52,6 +52,7 @@ const initServer = async () => {
         const token = authHeader.split(" ")[1];
 
         const userPayload = decodeToken(token);
+
         if (!userPayload) {
           return { prisma, userId: null, role: null };
         }

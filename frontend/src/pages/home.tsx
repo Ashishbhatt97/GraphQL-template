@@ -1,5 +1,15 @@
+import FeaturesSection from "@/components/Features";
+import HeroSection from "@/components/HeroSection";
+import WhyUseGraphQLSection from "@/components/WhyUseGraphQL";
+
 const Homepage = () => {
-  return <div>Homepage</div>;
+  return (
+    <>
+      <HeroSection />
+      <FeaturesSection />
+      <WhyUseGraphQLSection />
+    </>
+  );
 };
 
 export default Homepage;

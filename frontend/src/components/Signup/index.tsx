@@ -22,7 +22,7 @@ const SignUp = () => {
     resolver: yupResolver(signupSchema),
   });
 
-  const [signup, { data, loading }] = useMutation(SIGNUP_MUTATION, {
+  const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
     onCompleted: () => {
       reset();
       toast.success("Signup successful!");
@@ -36,8 +36,6 @@ const SignUp = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-
     signup({
       variables: {
         name: data.name,
@@ -46,8 +44,6 @@ const SignUp = () => {
       },
     });
   };
-
-  console.log(data);
 
   return (
     <Container>

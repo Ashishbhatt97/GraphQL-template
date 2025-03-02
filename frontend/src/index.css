@@ -3,15 +3,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  font-family: Plus Jakarta Sans, Inter, system-ui, Avenir, Helvetica, Arial,
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 100, 200, 300, 400, 500, 600, 700, 800;
+@font-face {
+  font-family: Inter;
+  src: url("./assets/Fonts/Inter.ttf") format("truetype");
+}
 
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400, 500, 600, 700;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0d0d0d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -129,6 +132,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-[400,500,600,700];
   }
 }
